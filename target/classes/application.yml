@@ -1,0 +1,13 @@
+
+server:
+  port: 8080
+
+share_dir: E:\share
+
+spring:
+  application:
+    name: file_transmission
+  servlet:
+    multipart:
+      max-file-size: 64000MB
+      max-request-size: 6400MB

@@ -1,0 +1,56 @@
+html,
+body {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background-color: #eaeaea;
+}
+.center {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (min-width: 667px) {
+    form {
+        display: flex;
+        flex-direction: row;
+    }
+    .button1 {
+        margin-right: 6rem;
+    }
+}
+
+label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10rem;
+    height: 10rem;
+    margin-top: 1rem;
+    border: 1px solid #444f5a;
+    border-radius: .7rem;
+    text-align: center;
+    cursor: pointer;
+}
+.outer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: -2rem;
+    width: 200px;
+    height: 2rem;
+    text-align: center;
+    border-radius: .4rem;
+    box-sizing: border-box;
+    font-size: .8rem;
+    color: #eaeaea;
+    transition: top .5s ease-in-out;
+}
+.num {
+    position: absolute;
+}
+.inner {
+    width: 100px;
+    height: .8rem;
+    border-radius: .2rem;
+    background-color: #1e2022;
+}

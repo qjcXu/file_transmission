@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>文件页</title>
+  <style>
+    body,
+    html {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      background-color: #eaeaea;
+    }
+    .info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    @media screen and (min-width: 667px) {
+      .info {
+        width: 100%;
+      }
+      .file {
+        margin-right: 2rem;
+      }
+    }
+    .file {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      height: 4rem;
+      width: 16rem;
+      margin-top: 2rem;
+      border-radius: .6rem;
+      background-color: #3366ff;
+    }
+    a {
+      text-decoration: none;
+      color: #eaeaea;
+    }
+  </style>
+</head>
+<body>
+<div class="info"></div>
+<script>
+  function getFiles(path) {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', 'http://' + window.location.host + path)
+    xhr.send()
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState === 4 && xhr.status === 200){
+        const data = JSON.parse(xhr.responseText).data
+        console.log(data)
+        const info = document.querySelector('.info')
+        let html = ``
+        for (item in data) {
+          if (data[item].file) {
+            html += `<a href="/getfile/${data[item].path.replaceAll('\\', '&')}" download="file" class="file is"><svg t="1672297677613" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9730" width="32" height="32"><path d="M544 128h-288c-19.2 0-32 12.8-32 32v704c0 19.2 12.8 32 32 32h512c19.2 0 32-12.8 32-32v-480h-192c-35.2 0-64-28.8-64-64v-192z m64 12.8v179.2h179.2l-179.2-179.2z m-352-76.8h352c9.6 0 16 3.2 22.4 9.6l224 224c6.4 6.4 9.6 12.8 9.6 22.4v544c0 54.4-41.6 96-96 96h-512c-54.4 0-96-41.6-96-96v-704c0-54.4 41.6-96 96-96z m64 352h160c19.2 0 32 12.8 32 32s-12.8 32-32 32h-160c-19.2 0-32-12.8-32-32s12.8-32 32-32z m0 128h384c19.2 0 32 12.8 32 32s-12.8 32-32 32h-384c-19.2 0-32-12.8-32-32s12.8-32 32-32z m0 128h384c19.2 0 32 12.8 32 32s-12.8 32-32 32h-384c-19.2 0-32-12.8-32-32s12.8-32 32-32z" fill="#374E6B" p-id="9731"></path></svg> <span>${data[item].name}</span></a>`
+          } else {
+            html += '<a href="javascript:void(0);" '
+            html += 'onclick="getFiles(\'/getfiles/'
+            html += data[item].path.replaceAll('\\', '&')
+            html += `')" class="file not"><svg t="1672295388954" class="icon" viewBox="0 0 1072 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6769" width="32" height="32"><path d="M491.9107146 202.62499973h209.1696427a88.39285674 88.39285674 0 0 1 88.39285675 88.39285757 32.1428573 32.1428573 0 1 0 64.28571459 0 152.67857136 152.67857136 0 0 0-152.67857134-152.67857135H491.9107146a32.1428573 32.1428573 0 1 0 0 64.28571378z m61.67410648 56.25000027L482.5491073 116.00000027a32.1428573 32.1428573 0 1 0-57.57589325 28.60714271l74.37053595 149.58482107a52.2321427 52.2321427 0 0 0 46.76785702 28.96875055H813.33928595A88.39285674 88.39285674 0 0 1 901.7321427 411.55357136v321.42857134a32.1428573 32.1428573 0 1 0 64.2857146 0V411.55357136A152.67857136 152.67857136 0 0 0 813.33928595 258.875h-259.75446487z m348.14732162 273.5357146V773.16071433a88.39285674 88.39285674 0 0 1-88.39285675 88.39285674H250.83928567A88.39285674 88.39285674 0 0 1 162.44642893 773.16071433V250.83928567A88.39285674 88.39285674 0 0 1 250.83928567 162.44642893h202.90178568a32.1428573 32.1428573 0 1 0 0-64.2857146H250.83928567A152.67857136 152.67857136 0 0 0 98.16071433 250.83928567v522.32142866A152.67857136 152.67857136 0 0 0 250.83928567 925.83928567h562.50000028a152.67857136 152.67857136 0 0 0 152.67857135-152.67857134v-240.74999973a32.1428573 32.1428573 0 1 0-64.2857146 0z" p-id="6770"></path></svg> <span>${data[item].name}</span></a>`
+          }
+        }
+        info.innerHTML = html
+      }
+    }
+  }
+  getFiles('/file')
+</script>
+</body>
+</html>

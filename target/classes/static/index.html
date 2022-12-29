@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>主页</title>
+    <link rel="stylesheet" href="./css/common.css">
+</head>
+<body>
+<div class="center">
+    <form action="/file" method="post" enctype="multipart/form-data">
+        <label class="button1" for="select-file"><svg t="1672238863162" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3524" width="64" height="64"><path d="M512 128c212 0 384 172 384 384s-172 384-384 384-384-172-384-384 172-384 384-384m0-64C264.8 64 64 264.8 64 512s200.8 448 448 448 448-200.8 448-448S759.2 64 512 64z" p-id="3525"></path><path d="M768 481.6H544.8V256h-65.6v225.6H256v65.6h223.2V768h65.6V547.2H768z" p-id="3526"></path></svg></label>
+        <input type="file" id="select-file" name="files" value="请选择文件" style="display: none">
+        <label class="button1" for="upload"><svg t="1672238959653" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2710" width="64" height="64"><path d="M896 608a32 32 0 0 1 31.850667 28.928L928 640v96c0 115.946667-93.312 210.133333-209.450667 213.248l-5.909333 0.085333h-401.28c-116.885333 0-212.138667-92.288-215.274667-207.466666L96 736V640a32 32 0 0 1 63.850667-3.072L160 640v96c0 80.704 64.96 146.602667 146.261333 149.248l5.12 0.085333h401.258667c81.962667 0 148.586667-64.234667 151.274667-144.298666l0.085333-5.034667V640a32 32 0 0 1 32-32zM503.978667 123.370667a32 32 0 0 1 34.752-1.706667l2.624 1.706667 266.666666 192a32 32 0 0 1-34.794666 53.610666l-2.581334-1.685333L522.666667 188.757333l-247.978667 178.56a32 32 0 0 1-42.730667-4.864l-1.92-2.432a32 32 0 0 1 4.842667-42.730666l2.432-1.92 266.666667-192z" fill="#262626" p-id="2711"></path><path d="M522.666667 704a32 32 0 0 1-32-32v-490.666667a32 32 0 0 1 64 0v490.666667a32 32 0 0 1-32 32z" fill="#262626" p-id="2712"></path></svg></label>
+        <input type="submit" value="" id="upload" style="display: none" onclick="upload()">
+        <label for="load"><svg t="1672292715347" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2741" width="64" height="64"><path d="M808.192 246.528a320.16 320.16 0 0 0-592.352 0A238.592 238.592 0 0 0 32 479.936c0 132.352 107.648 240 240 240h91.488a32 32 0 1 0 0-64H272a176.192 176.192 0 0 1-176-176 175.04 175.04 0 0 1 148.48-173.888l19.04-2.976 6.24-18.24C305.248 181.408 402.592 111.936 512 111.936a256 256 0 0 1 242.208 172.896l6.272 18.24 19.04 2.976A175.04 175.04 0 0 1 928 479.936c0 97.024-78.976 176-176 176h-97.28a32 32 0 1 0 0 64h97.28c132.352 0 240-107.648 240-240a238.592 238.592 0 0 0-183.808-233.408z" p-id="2742"></path><path d="M649.792 789.888L544 876.48V447.936a32 32 0 0 0-64 0V876.48l-106.752-87.424a31.968 31.968 0 1 0-40.544 49.504l159.04 130.24a32 32 0 0 0 40.576 0l158.048-129.44a32 32 0 1 0-40.576-49.472z" p-id="2743"></path></svg></label>
+        <input type="button" id="load" style="display: none" onclick="window.location.href='/files.html'">
+    </form>
+    <div class="outer">
+        <span class="num"></span>
+        <!-- 进度条 -->
+        <div class="inner"></div>
+    </div>
+</div>
+<script>
+    let form = document.querySelector('form')
+    let submit = document.querySelector('input[type=submit]')
+    let inner = document.querySelector('.inner')
+    let outer = document.querySelector('.outer')
+    let num = document.querySelector('.num')
+    submit.onclick = function(){
+        let formObj = new FormData(form);
+        let xhr = new XMLHttpRequest();
+        outer.style.top = '2rem'
+        xhr.open('post', 'http://' + window.location.host + '/file');
+        xhr.upload.onprogress = function(e){
+            inner.style.width = ((e.loaded / e.total) * 198) + 'px';
+            num.innerHTML = ((e.loaded / e.total) * 100).toFixed(2) + '%'
+        }
+        xhr.send(formObj);
+    }
+</script>
+</body>
+</html>
